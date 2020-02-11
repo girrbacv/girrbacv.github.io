@@ -100,7 +100,7 @@ namespace Endabgabe {
     function update(): void {
         crc2.clearRect(0, 0, 1400, 900);
         crc2.putImageData(imagedata, 0, 0);
-        window.setTimeout(update, 1000 / fps);
+        window.setTimeout(update, 180000 / fps);
 
 
         for (let i: number = 0; i < objects.length; i++) {
