@@ -2,10 +2,11 @@
 
 namespace Endabgabe {
 
-    window.addEventListener("load", init); //event listener startet funktion init
+    window.addEventListener("load", init);
 
     export let crc2: CanvasRenderingContext2D;
-    let server: string = "https://eia-endabgabe.herokuapp.com";
+    
+    let server: string = "https://girrbacv2.herokuapp.com";
     let golden: number = 0.62;
     let objects: DrawObject[] = [];
     let birds: Birds[] = [];
@@ -15,8 +16,8 @@ namespace Endabgabe {
     let xMouse: number;
     let yMouse: number;
     let snowball: Snowball;
-    export let name: string;
-    export let score: number = 0;
+    //export let name: string;
+    //export let score: number = 0;
     let gameEndbool: boolean = false;
     export let canvas: HTMLCanvasElement;
     let start: HTMLButtonElement;
@@ -32,7 +33,6 @@ namespace Endabgabe {
     function init(): void {
         document.getElementById("start").addEventListener("click", startGame);
         document.getElementById("ende").classList.add("invisible");
-
     }
     //Nach laden der Seite wird die Funktion init aufgerufen, die an das HtmlElement "Anleitung" einen click-Eventlistener anhängt, 
     //der die Funktion startGame aufruft
@@ -51,6 +51,10 @@ namespace Endabgabe {
         canvas = document.getElementsByTagName("canvas")[0];
         crc2 = <CanvasRenderingContext2D>canvas.getContext("2d");
 
+
+        // document.getElementById("startscreen").classList.add("invisible");
+        
+
         drawBackground();
 
         drawClouds();
@@ -65,12 +69,13 @@ namespace Endabgabe {
         drawSnowman();
         console.log("Snowman", drawSnowman);
 
-        drawTrees();                        //funktion
+        drawTrees();
         console.log("Trees", drawTrees);
 
-        generateBird(); //ruft die klasse Bird auf
+        generateBird();
         //generatePickingBird();
         generateSnow();
+
 
         imagedata = crc2.getImageData(0, 0, canvas.width, canvas.height);
         setTimeout(gameEnds, 180000);
@@ -79,7 +84,7 @@ namespace Endabgabe {
     }
 
     function drawBackground(): void {
-        console.log("Background");       
+        console.log("Background");
         let gradiant: CanvasGradient = crc2.createLinearGradient(0, 0, 0, crc2.canvas.height);
         gradiant.addColorStop(0, "HSL(197,71%,73%");
         gradiant.addColorStop(golden, "white");
@@ -95,6 +100,7 @@ namespace Endabgabe {
         document.getElementsByTagName("div")[0].classList.add("invisible");
 
     }
+
 
 
     function update(): void {
@@ -204,8 +210,8 @@ namespace Endabgabe {
     /*function pickingBirds(): void {
         for (let i: number = 0; i < 5; i++) {
     
-            let bird: pickingBird = new pickingBirds();
-            objects.push(bird);
+            let bird: pickinBbird = new pickingBird();
+            objects.push(birds);
             birds.push(bird);
         }
     }*/
@@ -225,8 +231,6 @@ namespace Endabgabe {
     function reload(): void {
         window.location.reload();
     }
-
-     
 
     function drawScore(): void {
         crc2.beginPath();
@@ -249,76 +253,9 @@ namespace Endabgabe {
         crc2.fillStyle = "#000000";
 
         crc2.fillText(score.toString(), 200, 750);
-    }
 
-    export function end(): void {
 
-        let submit: HTMLButtonElement = <HTMLButtonElement>document.querySelector("button[type=submit]");
-        submit.addEventListener("click", nameScore);
-
-        document.getElementById("game").style.display = "none";
-        document.getElementById("ende").style.display = "initial";
 
     }
 
-//server
-
-
-    function nameScore(): void {
-        console.log("end");
-        let insertedname: any = prompt("Your Score: " + score + "\n Enter your name.");
-        if (insertedname != null) {
-            sendtohighscorelist(insertedname, score);
-        }
-    }
-    async function sendtohighscorelist(_insertedName: string, _score: number): Promise<void> {
-
-        let query: string = "name=" + _insertedName + "&highScore=" + _score;
-        let response: Response = await fetch(server + "?" + query);
-        alert(response);
-
-    }
-
-    async function gethighscorelist(): Promise<void> {
-
-        console.log("Highscores ausgeben");
-        let query: string = "command=retrieve";
-        let response: Response = await fetch(server + "?" + query);
-        let responseText: string = await response.text();
-        let finalresponse: any[] = JSON.parse(responseText);
-
-        alert(responseText);
-        let orders: HTMLDivElement = <HTMLDivElement>document.querySelector("span#highscorelist");
-        orders.innerText = responseText;
-
-
-
-        interface Highscore {
-            spieler: string;
-            score: string;
-        }
-
-        let final: Highscore[] = [];
-
-        for (let i: number = 0; i < finalresponse.length; i++) {
-            let entry: Highscore = { spieler: finalresponse[i].name, score: finalresponse[i].score };
-            for (let j: number = 0; 0 < final.length; j++) {
-                if (finalresponse[i].score > final[j].score) {
-                    final.splice(j, 0, entry);
-                    break;
-                }
-                else
-                    final.push(entry);
-
-            }
-
-            for (let m: number = 0; m < final.length; m++) {
-                let elem: HTMLParagraphElement = document.createElement("p");
-                elem.innerText = final[m].score + "  " + final[m].spieler;
-
-            }
-        }
-    }
-
-    
 }

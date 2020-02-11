@@ -1,17 +1,8 @@
 //import { start } from "repl";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var Endabgabe;
 (function (Endabgabe) {
-    window.addEventListener("load", init); //event listener startet funktion init
-    let server = "https://eia-endabgabe.herokuapp.com";
+    window.addEventListener("load", init);
+    let server = "https://girrbacv2.herokuapp.com";
     let golden = 0.62;
     let objects = [];
     let birds = [];
@@ -21,7 +12,8 @@ var Endabgabe;
     let xMouse;
     let yMouse;
     let snowball;
-    Endabgabe.score = 0;
+    //export let name: string;
+    //export let score: number = 0;
     let gameEndbool = false;
     let start;
     function listeners() {
@@ -44,6 +36,7 @@ var Endabgabe;
         console.log("maininit");
         Endabgabe.canvas = document.getElementsByTagName("canvas")[0];
         Endabgabe.crc2 = Endabgabe.canvas.getContext("2d");
+        // document.getElementById("startscreen").classList.add("invisible");
         drawBackground();
         Endabgabe.drawClouds();
         console.log("Clouds", Endabgabe.drawClouds);
@@ -53,13 +46,13 @@ var Endabgabe;
         console.log("Birdhouse", Endabgabe.drawBirdhouse);
         Endabgabe.drawSnowman();
         console.log("Snowman", Endabgabe.drawSnowman);
-        Endabgabe.drawTrees(); //funktion
+        Endabgabe.drawTrees();
         console.log("Trees", Endabgabe.drawTrees);
-        generateBird(); //ruft die klasse Bird auf
+        generateBird();
         //generatePickingBird();
         generateSnow();
         imagedata = Endabgabe.crc2.getImageData(0, 0, Endabgabe.canvas.width, Endabgabe.canvas.height);
-        setTimeout(gameEnds, 1);
+        setTimeout(gameEnds, 180000);
         update();
     }
     function drawBackground() {
@@ -163,8 +156,8 @@ var Endabgabe;
     /*function pickingBirds(): void {
         for (let i: number = 0; i < 5; i++) {
     
-            let bird: pickingBird = new pickingBirds();
-            objects.push(bird);
+            let bird: pickinBbird = new pickingBird();
+            objects.push(birds);
             birds.push(bird);
         }
     }*/
@@ -198,56 +191,6 @@ var Endabgabe;
         Endabgabe.crc2.font = "55px Amatic SC";
         Endabgabe.crc2.fillStyle = "#000000";
         Endabgabe.crc2.fillText(Endabgabe.score.toString(), 200, 750);
-    }
-    function end() {
-        let submit = document.querySelector("button[type=submit]");
-        submit.addEventListener("click", nameScore);
-        document.getElementById("game").style.display = "none";
-        document.getElementById("ende").style.display = "initial";
-    }
-    Endabgabe.end = end;
-    //server
-    function nameScore() {
-        console.log("end");
-        let insertedname = prompt("Your Score: " + Endabgabe.score + "\n Enter your name.");
-        if (insertedname != null) {
-            sendtohighscorelist(insertedname, Endabgabe.score);
-        }
-    }
-    function sendtohighscorelist(_insertedName, _score) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let query = "name=" + _insertedName + "&highScore=" + _score;
-            let response = yield fetch(server + "?" + query);
-            alert(response);
-        });
-    }
-    function gethighscorelist() {
-        return __awaiter(this, void 0, void 0, function* () {
-            console.log("Highscores ausgeben");
-            let query = "command=retrieve";
-            let response = yield fetch(server + "?" + query);
-            let responseText = yield response.text();
-            let finalresponse = JSON.parse(responseText);
-            alert(responseText);
-            let orders = document.querySelector("span#highscorelist");
-            orders.innerText = responseText;
-            let final = [];
-            for (let i = 0; i < finalresponse.length; i++) {
-                let entry = { spieler: finalresponse[i].name, score: finalresponse[i].score };
-                for (let j = 0; 0 < final.length; j++) {
-                    if (finalresponse[i].score > final[j].score) {
-                        final.splice(j, 0, entry);
-                        break;
-                    }
-                    else
-                        final.push(entry);
-                }
-                for (let m = 0; m < final.length; m++) {
-                    let elem = document.createElement("p");
-                    elem.innerText = final[m].score + "  " + final[m].spieler;
-                }
-            }
-        });
     }
 })(Endabgabe || (Endabgabe = {}));
 //# sourceMappingURL=Main.js.map
