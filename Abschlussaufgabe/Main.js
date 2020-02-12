@@ -17,8 +17,6 @@ var Endabgabe;
     function listeners() {
         console.log("listeners");
         document.getElementsByTagName("canvas")[0].addEventListener("click", mouseEvent);
-        document.getElementsByTagName("canvas")[0].addEventListener("contextmenu", handleRightClick);
-        //canvas.addEventListener("contextmenu", handleRightClick);
         //"Click"-Eventlistener vom Typ MouseEvent an canvas
     }
     function init() {

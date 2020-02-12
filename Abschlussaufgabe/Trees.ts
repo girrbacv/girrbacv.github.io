@@ -10,7 +10,7 @@ namespace Endabgabe {
         crc2.closePath();
         crc2.fill();
     
-        crc2.fillStyle = "HSLA(120,100%,20%)"
+        crc2.fillStyle = "HSLA(120,100%,20%)";
         crc2.beginPath();
         crc2.moveTo(310, 300);
         crc2.lineTo(260, 500);

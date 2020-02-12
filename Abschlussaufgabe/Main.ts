@@ -212,14 +212,7 @@ namespace Endabgabe {
         }
     }
 
-    /*function pickingBirds(): void {
-        for (let i: number = 0; i < 5; i++) {
-    
-            let child: slowChildren = new slowChildren();
-            objects.push(child);
-            children.push(child);
-        }
-    }*/
+   
 
     function gameEnds(): void {
         document.getElementsByTagName("canvas")[0].classList.add("invisible");
